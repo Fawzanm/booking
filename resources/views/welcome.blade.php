@@ -6,12 +6,30 @@
     <meta name="description" content="">
     <meta name="author" content="">
     {{--    <link rel="icon" href="../../../../favicon.ico">--}}
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Bookingz App</title>
 
     <!-- Custom styles for this template -->
     <link href="css/app.css" rel="stylesheet">
     <link href="css/album.css" rel="stylesheet">
+
+    <script type="text/javascript">
+        var datefield = document.createElement("input");
+        datefield.setAttribute("type", "date")
+        if (datefield.type != "date") { //if browser doesn't support input type="date", load files for jQuery UI Date Picker
+            document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')
+            document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')
+            document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n')
+        }
+    </script>
+    <script>
+        if (datefield.type != "date") { //if browser doesn't support input type="date", initialize date picker widget:
+            jQuery(function ($) { //on document.ready
+                $('#booking_date').datepicker();
+            })
+        }
+    </script>
 </head>
 
 <body>
@@ -27,7 +45,7 @@
 </header>
 
 
-<main role="main">
+<div role="main" id="main">
 
     <section class="jumbotron text-center">
         <div class="container">
@@ -35,7 +53,8 @@
             <p class="lead text-muted">Are ypu looking for affordable rooms in UAE for short term? We got you covered.
                 Checkout our deals.</p>
             <p>
-                <a href="#" class="btn btn-primary my-2">Request a Call</a>
+                <input class="form-control" type="date" placeholder="YYYY-MM-DD" id="booking_date">
+                <a href="#" class="btn btn-primary my-2" @click="filterRooms">Check availability</a>
             </p>
         </div>
     </section>
@@ -44,146 +63,46 @@
         <div class="container">
 
             <div class="row">
-                @forelse ($rooms as $room)
-                    <div class="col-md-4">
-                        <div class="card mb-4 box-shadow">
-                            <img class="card-img-top"
-                                 src="images/default.jpg"
-                                 alt="Card image cap">
-                            <div class="card-body">
-                                <h3>{{$room->name}}</h3>
-                                <p class="card-text">{{$room->description}}</p>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <div class="btn-group">
-                                        <a type="button" class="btn btn-sm btn-outline-secondary"
-                                           href="/booking?id={{$room->id}}"">Book Now</a>
-                                        {{--                                        <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>--}}
-                                    </div>
-                                    <small class="text-muted">{{$room->price}}AED / day</small>
+                <div class="col-md-4" v-for="room in rooms">
+                    <div class="card mb-4 box-shadow">
+                        <img class="card-img-top"
+                             src="images/default.jpg"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <h3>@{{room.name}}</h3>
+                            <p class="card-text">@{{room.description}}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <a type="button" class="btn btn-sm btn-outline-secondary"
+                                       href="/booking?id=1">Book Now</a>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
                                 </div>
+                                <small class="text-muted">@{{room.price}}AED / day</small>
                             </div>
                         </div>
                     </div>
-                @empty
-                    <p>We don't have any rooms yet. Please check back later.</p>
-                @endforelse
+                </div>
+
+                <p>We don't have any rooms yet. Please check back later.</p>
             </div>
         </div>
     </div>
 
-</main>
+</div>
+
 
 <footer class="text-muted">
     <div class="container">
         <p class="float-right">
             <a href="#">Back to top</a>
         </p>
-        <p>Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-        <p>New to Bootstrap? <a href="../../">Visit the homepage</a> or read our <a href="../../getting-started/">getting
-                started guide</a>.</p>
+        <p>Bookinz llc. Dubai, UAE</p>
+
     </div>
 </footer>
+<script src="js/main.js"></script>
 
 </body>
 </html>
 
 
-{{--<!DOCTYPE html>--}}
-{{--<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">--}}
-{{--    <head>--}}
-{{--        <meta charset="utf-8">--}}
-{{--        <meta name="viewport" content="width=device-width, initial-scale=1">--}}
-
-{{--        <title>Laravel</title>--}}
-
-{{--        <!-- Fonts -->--}}
-{{--        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">--}}
-
-{{--        <!-- Styles -->--}}
-{{--        <style>--}}
-{{--            html, body {--}}
-{{--                background-color: #fff;--}}
-{{--                color: #636b6f;--}}
-{{--                font-family: 'Nunito', sans-serif;--}}
-{{--                font-weight: 200;--}}
-{{--                height: 100vh;--}}
-{{--                margin: 0;--}}
-{{--            }--}}
-
-{{--            .full-height {--}}
-{{--                height: 100vh;--}}
-{{--            }--}}
-
-{{--            .flex-center {--}}
-{{--                align-items: center;--}}
-{{--                display: flex;--}}
-{{--                justify-content: center;--}}
-{{--            }--}}
-
-{{--            .position-ref {--}}
-{{--                position: relative;--}}
-{{--            }--}}
-
-{{--            .top-right {--}}
-{{--                position: absolute;--}}
-{{--                right: 10px;--}}
-{{--                top: 18px;--}}
-{{--            }--}}
-
-{{--            .content {--}}
-{{--                text-align: center;--}}
-{{--            }--}}
-
-{{--            .title {--}}
-{{--                font-size: 84px;--}}
-{{--            }--}}
-
-{{--            .links > a {--}}
-{{--                color: #636b6f;--}}
-{{--                padding: 0 25px;--}}
-{{--                font-size: 13px;--}}
-{{--                font-weight: 600;--}}
-{{--                letter-spacing: .1rem;--}}
-{{--                text-decoration: none;--}}
-{{--                text-transform: uppercase;--}}
-{{--            }--}}
-
-{{--            .m-b-md {--}}
-{{--                margin-bottom: 30px;--}}
-{{--            }--}}
-{{--        </style>--}}
-{{--    </head>--}}
-{{--    <body>--}}
-{{--        <div class="flex-center position-ref full-height">--}}
-{{--            @if (Route::has('login'))--}}
-{{--                <div class="top-right links">--}}
-{{--                    @auth--}}
-{{--                        <a href="{{ url('/home') }}">Home</a>--}}
-{{--                    @else--}}
-{{--                        <a href="{{ route('login') }}">Login</a>--}}
-
-{{--                        @if (Route::has('register'))--}}
-{{--                            <a href="{{ route('register') }}">Register</a>--}}
-{{--                        @endif--}}
-{{--                    @endauth--}}
-{{--                </div>--}}
-{{--            @endif--}}
-
-{{--            <div class="content">--}}
-{{--                <div class="title m-b-md">--}}
-{{--                    Laravel--}}
-{{--                </div>--}}
-
-{{--                <div class="links">--}}
-{{--                    <a href="https://laravel.com/docs">Docs</a>--}}
-{{--                    <a href="https://laracasts.com">Laracasts</a>--}}
-{{--                    <a href="https://laravel-news.com">News</a>--}}
-{{--                    <a href="https://blog.laravel.com">Blog</a>--}}
-{{--                    <a href="https://nova.laravel.com">Nova</a>--}}
-{{--                    <a href="https://forge.laravel.com">Forge</a>--}}
-{{--                    <a href="https://github.com/laravel/laravel">GitHub</a>--}}
-{{--                </div>--}}
-{{--            </div>--}}
-{{--        </div>--}}
-{{--    </body>--}}
-{{--</html>--}}

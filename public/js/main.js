@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -49319,91 +49319,6 @@ module.exports = function(module) {
 
 /***/ }),
 
-/***/ "./resources/js/app.js":
-/*!*****************************!*\
-  !*** ./resources/js/app.js ***!
-  \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-var room = new Vue({
-  el: '#room',
-  data: {
-    name: '',
-    capacity: '',
-    description: '',
-    type: 'apartment',
-    price: ''
-  },
-  mounted: function mounted() {
-    console.log('ROOM');
-  },
-  methods: {
-    saveForm: function saveForm() {
-      // alert('save');
-      console.log('save clicked');
-      console.log(this.name, this.capacity, this.description, this.type, this.price);
-      var d = {
-        name: this.name,
-        capacity: this.capacity,
-        description: this.description,
-        type: this.type,
-        price: this.price
-      };
-      axios.post('/rooms/save', d).then(function (resp) {
-        console.log(resp.data);
-      });
-    },
-    resetForm: function resetForm() {
-      console.log('reset clicked');
-      this.name = '';
-      this.capacity = '';
-      this.description = '';
-      this.type = 'apartment';
-      this.price = '';
-    }
-  }
-});
-var main = new Vue({
-  el: '#main',
-  data: {},
-  mounted: function mounted() {
-    console.log('Main mounted');
-  },
-  methods: {
-    filterRooms: function filterRooms() {
-      console.log('Filtering rooms');
-    }
-  }
-});
-
-/***/ }),
-
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -49531,26 +49446,72 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/sass/app.scss":
-/*!*********************************!*\
-  !*** ./resources/sass/app.scss ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-
-/***/ 0:
-/*!*************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/app.scss ***!
-  \*************************************************************/
+/***/ "./resources/js/main.js":
+/*!******************************!*\
+  !*** ./resources/js/main.js ***!
+  \******************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/fawzan/bits/booking/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/fawzan/bits/booking/resources/sass/app.scss */"./resources/sass/app.scss");
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/**
+ * The following block of code may be used to automatically register your
+ * Vue components. It will recursively scan this directory for the Vue
+ * components and automatically register them with their "basename".
+ *
+ * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ */
+// const files = require.context('./', true, /\.vue$/i);
+// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+
+Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+
+var main = new Vue({
+  el: '#main',
+  data: {
+    rooms: [{
+      Ok: 1
+    }]
+  },
+  mounted: function mounted() {
+    console.log('Main mounted');
+    this.getRooms();
+  },
+  methods: {
+    filterRooms: function filterRooms() {
+      console.log('Filtering rooms');
+    },
+    getRooms: function getRooms() {
+      var vm = this;
+      axios.get('/rooms').then(function (resp) {
+        vm.rooms = resp.data.rooms;
+      });
+    }
+  }
+});
+
+/***/ }),
+
+/***/ 1:
+/*!************************************!*\
+  !*** multi ./resources/js/main.js ***!
+  \************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! /Users/fawzan/bits/booking/resources/js/main.js */"./resources/js/main.js");
 
 
 /***/ })

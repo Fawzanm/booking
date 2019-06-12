@@ -29,63 +29,28 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 
 
 
-const room = new Vue({
-    el: '#room',
-    data: {
-        name: '',
-        capacity: '',
-        description: '',
-        type: 'apartment',
-        price: ''
-
-    },
-    mounted() {
-        console.log('ROOM');
-    },
-    methods: {
-        saveForm() {
-            // alert('save');
-            console.log('save clicked');
-            console.log(this.name, this.capacity, this.description, this.type, this.price);
-            let d = {
-                name: this.name,
-                capacity: this.capacity,
-                description: this.description,
-                type: this.type,
-                price: this.price
-            };
-
-            axios.post('/rooms/save', d)
-                .then(function (resp) {
-                    console.log(resp.data);
-                })
-        },
-
-        resetForm() {
-
-            console.log('reset clicked');
-
-            this.name = '';
-            this.capacity = '';
-            this.description = '';
-            this.type = 'apartment';
-            this.price = '';
-
-        }
-    }
-
-});
-
 const main = new Vue({
     el: '#main',
-    data: {},
+    data: {
+        rooms: [{Ok: 1}]
+    },
     mounted() {
         console.log('Main mounted');
+        this.getRooms();
     },
 
     methods: {
         filterRooms() {
             console.log('Filtering rooms');
+        },
+
+        getRooms() {
+
+            var vm = this;
+
+            axios.get('/rooms').then(function (resp) {
+                vm.rooms = resp.data.rooms;
+            })
         }
     }
 });
