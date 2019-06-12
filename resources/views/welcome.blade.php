@@ -9,10 +9,7 @@
 
     <title>Bookingz App</title>
 
-    <!-- Bootstrap core CSS -->
-{{--    <link href="../../../../dist/css/bootstrap.min.css" rel="stylesheet">--}}
-
-<!-- Custom styles for this template -->
+    <!-- Custom styles for this template -->
     <link href="css/app.css" rel="stylesheet">
     <link href="css/album.css" rel="stylesheet">
 </head>
