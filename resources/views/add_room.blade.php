@@ -1,7 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
+    <div class="container" id="room" xmlns:v-on="http://www.w3.org/1999/xhtml"
+         xmlns:v-bind="http://www.w3.org/1999/xhtml">
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
@@ -15,28 +16,30 @@
                         @endif
 
 
-                        <form>
+                        <div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="inputEmail4">Name</label>
-                                    <input type="text" class="form-control" id="name" placeholder="Luxury Room">
+                                    <label for="name">Name</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Luxury Room"
+                                           v-model="name">
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="capacity">Capacity</label>
-                                    <input type="number" class="form-control" id="capacity"
-                                           placeholder="2">
+                                    <input type="text" class="form-control" id="capacity"
+                                           placeholder="2" v-model="capacity">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="description">Description</label>
                                 <input type="text" class="form-control" id="description"
-                                       placeholder="Fully furnished luxury room">
+                                       placeholder="Fully furnished luxury room" v-model="description">
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="type">Type</label>
-                                    <select type="text" class="form-control" id="type">
+                                    <select type="text" class="form-control" id="type" v-bind:value="type"
+                                            v-on:change="type = $event.target.value">
                                         <option value="apartment">Apartment</option>
                                         <option value="studio">Studio</option>
                                         <option value="room">Room</option>
@@ -45,16 +48,18 @@
 
                                 <div class="form-group col-md-6">
                                     <label for="price">Price/Day(AED)</label>
-                                    <input type="number" class="form-control" id="price" placeholder="100">
+                                    <input type="text" class="form-control" id="price" placeholder="100"
+                                           v-model="price">
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Save</button>
-                            <button class="btn btn-danger">Reset</button>
-                        </form>
+                            <button class="btn btn-primary" @click="saveForm">Save</button>
+                            <button class="btn btn-danger" @click="resetForm">Reset</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 @endsection
+

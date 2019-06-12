@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class RoomController extends Controller
 {
@@ -20,17 +21,25 @@ class RoomController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Room
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        Room::create([
+            'name' => $request->input('name'),
+            'description' => $request->input('description'),
+            'type' => $request->input('type'),
+            'price' => $request->input('price'),
+            'capacity' => $request->input('capacity'),
+            'user_id' => Auth::user()->id
+        ]);
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,7 +50,7 @@ class RoomController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Room  $room
+     * @param \App\Room $room
      * @return \Illuminate\Http\Response
      */
     public function show(Room $room)
@@ -52,7 +61,7 @@ class RoomController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Room  $room
+     * @param \App\Room $room
      * @return \Illuminate\Http\Response
      */
     public function edit(Room $room)
@@ -63,8 +72,8 @@ class RoomController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Room  $room
+     * @param \Illuminate\Http\Request $request
+     * @param \App\Room $room
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Room $room)
@@ -75,7 +84,7 @@ class RoomController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Room  $room
+     * @param \App\Room $room
      * @return \Illuminate\Http\Response
      */
     public function destroy(Room $room)

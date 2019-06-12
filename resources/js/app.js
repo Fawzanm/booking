@@ -27,6 +27,51 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
-    el: '#app',
+
+
+const room = new Vue({
+    el: '#room',
+    data: {
+        name: '',
+        capacity: '',
+        description: '',
+        type: 'apartment',
+        price: ''
+
+    },
+    mounted() {
+        console.log('ROOM');
+    },
+    methods: {
+        saveForm() {
+            // alert('save');
+            console.log('save clicked');
+            console.log(this.name, this.capacity, this.description, this.type, this.price);
+            let d = {
+                name: this.name,
+                capacity: this.capacity,
+                description: this.description,
+                type: this.type,
+                price: this.price
+            };
+
+            axios.post('/rooms/save', d)
+                .then(function (resp) {
+                    console.log(resp.data);
+                })
+        },
+
+        resetForm() {
+
+            console.log('reset clicked');
+
+            this.name = '';
+            this.capacity = '';
+            this.description = '';
+            this.type = 'apartment';
+            this.price = '';
+
+        }
+    }
+
 });

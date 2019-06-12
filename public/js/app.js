@@ -49351,8 +49351,43 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var app = new Vue({
-  el: '#app'
+var room = new Vue({
+  el: '#room',
+  data: {
+    name: '',
+    capacity: '',
+    description: '',
+    type: 'apartment',
+    price: ''
+  },
+  mounted: function mounted() {
+    console.log('ROOM');
+  },
+  methods: {
+    saveForm: function saveForm() {
+      // alert('save');
+      console.log('save clicked');
+      console.log(this.name, this.capacity, this.description, this.type, this.price);
+      var d = {
+        name: this.name,
+        capacity: this.capacity,
+        description: this.description,
+        type: this.type,
+        price: this.price
+      };
+      axios.post('/rooms/save', d).then(function (resp) {
+        console.log(resp.data);
+      });
+    },
+    resetForm: function resetForm() {
+      console.log('reset clicked');
+      this.name = '';
+      this.capacity = '';
+      this.description = '';
+      this.type = 'apartment';
+      this.price = '';
+    }
+  }
 });
 
 /***/ }),
