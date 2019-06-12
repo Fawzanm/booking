@@ -12,15 +12,13 @@
 */
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'GuestController@index');
+Route::get('/booking', 'GuestController@booking');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/dashboard', 'HomeController@bookings')->name('bookings');
 Route::get('/add_room', 'HomeController@add_room')->name('add_room');
-
 
 Route::post('/rooms/save', 'RoomController@create');
