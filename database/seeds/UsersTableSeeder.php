@@ -15,7 +15,7 @@ class UserTableSeeder extends Seeder
     {
 
         $role_customer = Role::where('name', 'employee')->first();
-        $role_manager = Role::where('name', 'manager')->first();
+        $role_manager = Role::where('name', 'admin')->first();
 
         $customer = User::create([
             'email' => 'customer@examople.com',
