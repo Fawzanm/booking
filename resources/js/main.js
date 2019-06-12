@@ -66,6 +66,23 @@ const main = new Vue({
             })
         },
 
+        checkInDate() {
+            if (this.check_in !== '')
+                return this.check_in.getFullYear() + "/" + (this.check_in.getMonth() + 1) + "/" + this.check_in.getDate();
+
+            return '';
+        },
+
+        checkOutDate() {
+
+            if (this.check_out !== '')
+
+                return this.check_out.getFullYear() + "/" + (this.check_out.getMonth() + 1) + "/" + this.check_out.getDate();
+
+            return '';
+
+        }
+
     }
 });
 

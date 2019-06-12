@@ -51009,6 +51009,14 @@ var main = new Vue({
       axios.get('/rooms').then(function (resp) {
         vm.rooms = resp.data.rooms;
       });
+    },
+    checkInDate: function checkInDate() {
+      if (this.check_in !== '') return this.check_in.getFullYear() + "/" + (this.check_in.getMonth() + 1) + "/" + this.check_in.getDate();
+      return '';
+    },
+    checkOutDate: function checkOutDate() {
+      if (this.check_out !== '') return this.check_out.getFullYear() + "/" + (this.check_out.getMonth() + 1) + "/" + this.check_out.getDate();
+      return '';
     }
   }
 });

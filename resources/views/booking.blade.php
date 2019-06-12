@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.customer')
 
 @section('content')
     <div class="container" id="room" xmlns:v-on="http://www.w3.org/1999/xhtml"
@@ -19,9 +19,19 @@
                         <div>
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="name">Name</label>
-                                    <input type="date" class="form-control" id="from" placeholder=2019/01/01">
+                                    <label for="name">Check In</label>
+                                    <input type="date" class="form-control" id="from" placeholder="2019/01/01"
+                                           value="{{request('check_in')}}">
                                 </div>
+                                <div class="form-group col-md-6">
+                                    <label for="name">Check Out</label>
+                                    <input type="date" class="form-control" id="from" placeholder="2019/01/01"
+                                           value="{{ request('check_out') }}">
+                                </div>
+
+                            </div>
+
+                            <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="capacity">Capacity</label>
                                     <input type="text" class="form-control" id="capacity"
@@ -29,30 +39,19 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="description">Description</label>
+                                <label for="description">Comments</label>
                                 <input type="text" class="form-control" id="description"
                                        placeholder="Fully furnished luxury room" v-model="description">
                             </div>
 
-                            <div class="form-row">
-                                <div class="form-group col-md-6">
-                                    <label for="type">Type</label>
-                                    <select type="text" class="form-control" id="type" v-bind:value="type"
-                                            v-on:change="type = $event.target.value">
-                                        <option value="apartment">Apartment</option>
-                                        <option value="studio">Studio</option>
-                                        <option value="room">Room</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group col-md-6">
-                                    <label for="price">Price/Day(AED)</label>
-                                    <input type="text" class="form-control" id="price" placeholder="100"
-                                           v-model="price">
-                                </div>
+                            <div class="form-group">
+                                <label for="description">Total Payment</label>
+                                <input type="text" class="form-control" id="pay"
+                                        disabled>
                             </div>
 
-                            <button class="btn btn-primary" @click="saveForm">Save</button>
+
+                            <button class="btn btn-primary" @click="saveForm">Pay</button>
                             <button class="btn btn-danger" @click="resetForm">Reset</button>
                         </div>
                     </div>

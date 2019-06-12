@@ -14,23 +14,23 @@
     <link href="css/app.css" rel="stylesheet">
     <link href="css/album.css" rel="stylesheet">
 
-    <script type="text/javascript">
-        var datefield = document.createElement("input");
-        datefield.setAttribute("type", "date")
-        if (datefield.type != "date") { //if browser doesn't support input type="date", load files for jQuery UI Date Picker
-            document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')
-            document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')
-            document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n')
-        }
-    </script>
-    <script>
-        if (datefield.type != "date") { //if browser doesn't support input type="date", initialize date picker widget:
-            jQuery(function ($) { //on document.ready
-                $('#check_in').datepicker({dateFormat: 'yy-mm-dd'});
-                $('#check_out').datepicker({dateFormat: 'yy-mm-dd'});
-            })
-        }
-    </script>
+    {{--    <script type="text/javascript">--}}
+    {{--        var datefield = document.createElement("input");--}}
+    {{--        datefield.setAttribute("type", "date")--}}
+    {{--        if (datefield.type != "date") { //if browser doesn't support input type="date", load files for jQuery UI Date Picker--}}
+    {{--            document.write('<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css" />\n')--}}
+    {{--            document.write('<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"><\/script>\n')--}}
+    {{--            document.write('<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"><\/script>\n')--}}
+    {{--        }--}}
+    {{--    </script>--}}
+    {{--    <script>--}}
+    {{--        if (datefield.type != "date") { //if browser doesn't support input type="date", initialize date picker widget:--}}
+    {{--            jQuery(function ($) { //on document.ready--}}
+    {{--                $('#check_in').datepicker({dateFormat: 'yy-mm-dd'});--}}
+    {{--                $('#check_out').datepicker({dateFormat: 'yy-mm-dd'});--}}
+    {{--            })--}}
+    {{--        }--}}
+    {{--    </script>--}}
     <script src="https://unpkg.com/vuejs-datepicker"></script>
 </head>
 
@@ -58,16 +58,18 @@
             <div class="row">
 
                 <div class="form-group col-md-6">
-{{--                    <label for="price">Check In</label>--}}
+                    {{--                    <label for="price">Check In</label>--}}
                     {{--                    <input class="form-control" type="date" placeholder="DD/MM/YYYY" id="check_in" v-model="check_in">--}}
-                    <vuejs-datepicker :bootstrap-styling="true"  format="yyyy-MM-dd" placeholder="Check In" v-model="check_in"></vuejs-datepicker>
+                    <vuejs-datepicker :bootstrap-styling="true" format="yyyy-MM-dd" placeholder="Check In"
+                                      v-model="check_in"></vuejs-datepicker>
 
                 </div>
 
                 <div class="form-group col-md-6">
-{{--                    <label for="price">Check Out</label>--}}
+                    {{--                    <label for="price">Check Out</label>--}}
                     {{--                    <input class="form-control" type="date" placeholder="DD/MM/YYYY" id="check_out" v-model="check_out">--}}
-                    <vuejs-datepicker :bootstrap-styling="true"  format="yyyy-MM-dd" placeholder="Check Out" v-model="check_out"></vuejs-datepicker>
+                    <vuejs-datepicker :bootstrap-styling="true" format="yyyy-MM-dd" placeholder="Check Out"
+                                      v-model="check_out"></vuejs-datepicker>
 
                 </div>
             </div>
@@ -93,8 +95,9 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <a type="button" class="btn btn-sm btn-outline-secondary"
-                                       href="/booking?id=1">Book Now</a>
-                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                       :href="`/booking?id=${room.id}&check_in=${checkInDate()}&check_out=${checkOutDate()}`">Book
+                                        Now</a>
+                                    {{--                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>--}}
                                 </div>
                                 <small class="text-muted">@{{room.price}}AED / day</small>
                             </div>

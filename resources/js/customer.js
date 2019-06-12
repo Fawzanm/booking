@@ -73,6 +73,11 @@ const room = new Vue({
 
         },
 
+        computed: {
+            pay: function () {
+                return 111;
+            }
+        }
     }
 
 });
