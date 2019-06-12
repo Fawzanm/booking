@@ -20,7 +20,7 @@ class CreateRoomsTable extends Migration
             $table->integer('capacity');
             $table->float('price');
             $table->string('type');
-            $table->string('image', 255);
+            $table->string('image', 255)->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });

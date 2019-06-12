@@ -18,3 +18,5 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'HomeController@bookings')->name('bookings');
+Route::get('/add_room', 'HomeController@add_room')->name('add_room');

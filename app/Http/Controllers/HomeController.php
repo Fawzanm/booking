@@ -26,4 +26,21 @@ class HomeController extends Controller
         $request->user()->authorizeRoles(['admin']);
         return view('home');
     }
+
+
+    public function bookings(Request $request)
+    {
+
+        $request->user()->authorizeRoles(['admin']);
+        return view('bookings');
+
+    }
+
+    public function add_room(Request $request)
+    {
+
+        $request->user()->authorizeRoles(['admin']);
+        return view('add_room');
+
+    }
 }

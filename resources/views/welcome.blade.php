@@ -19,7 +19,7 @@
 <header>
 
     <nav class="nav float-md-right">
-        <a class="nav-link active" href="{{ route('home') }}">Home</a>
+        <a class="nav-link active" href="{{ route('bookings') }}">Home</a>
         <a class="nav-link" href="{{ route('register') }}">Register</a>
         <a class="nav-link" href="{{ route('login') }}">Login</a>
         {{--        <a class="nav-link disabled" href="#">Contact</a>--}}
