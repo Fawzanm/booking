@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Room;
+use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class RoomController extends Controller
 {
@@ -16,6 +19,23 @@ class RoomController extends Controller
     public function index()
     {
         return ['rooms' => Room::all()];
+    }
+
+    public function available(Request $request)
+    {
+        $from = (new DateTime($request->input('check_in')))->format('Y-m-d');
+        $to = (new DateTime($request->input('check_out')))->format('Y-m-d');
+
+        $query = "SELECT *
+                    FROM rooms WHERE id NOT IN (
+                        SELECT DISTINCT room_id FROM bookings
+                            WHERE check_in >= '$from' AND check_out <= '$to'
+                            )";
+
+        Log::debug($query);
+
+        return DB::select($query);
+
     }
 
     /**

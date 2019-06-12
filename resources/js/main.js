@@ -8,6 +8,8 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+import Datepicker from 'vuejs-datepicker';
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -32,16 +34,27 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 const main = new Vue({
     el: '#main',
     data: {
-        rooms: [{Ok: 1}]
+        rooms: [],
+        check_in: '',
+        check_out: ''
     },
     mounted() {
-        console.log('Main mounted');
         this.getRooms();
     },
-
+    components: {
+        vuejsDatepicker
+    },
     methods: {
         filterRooms() {
-            console.log('Filtering rooms');
+            console.log('Filtering rooms : ', this.check_in);
+            var vm = this;
+
+            let d = {check_in: this.check_in, check_out: this.check_out};
+
+            axios.post('/rooms/free', d).then(function (resp) {
+                vm.rooms = resp.data;
+                console.log(resp.data);
+            })
         },
 
         getRooms() {
@@ -51,8 +64,10 @@ const main = new Vue({
             axios.get('/rooms').then(function (resp) {
                 vm.rooms = resp.data.rooms;
             })
-        }
+        },
+
     }
 });
+
 
 

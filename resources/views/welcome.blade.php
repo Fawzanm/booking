@@ -26,10 +26,12 @@
     <script>
         if (datefield.type != "date") { //if browser doesn't support input type="date", initialize date picker widget:
             jQuery(function ($) { //on document.ready
-                $('#booking_date').datepicker();
+                $('#check_in').datepicker({dateFormat: 'yy-mm-dd'});
+                $('#check_out').datepicker({dateFormat: 'yy-mm-dd'});
             })
         }
     </script>
+    <script src="https://unpkg.com/vuejs-datepicker"></script>
 </head>
 
 <body>
@@ -53,8 +55,25 @@
             <p class="lead text-muted">Are ypu looking for affordable rooms in UAE for short term? We got you covered.
                 Checkout our deals.</p>
             <p>
-                <input class="form-control" type="date" placeholder="YYYY-MM-DD" id="booking_date">
-                <a href="#" class="btn btn-primary my-2" @click="filterRooms">Check availability</a>
+            <div class="row">
+
+                <div class="form-group col-md-6">
+{{--                    <label for="price">Check In</label>--}}
+                    {{--                    <input class="form-control" type="date" placeholder="DD/MM/YYYY" id="check_in" v-model="check_in">--}}
+                    <vuejs-datepicker :bootstrap-styling="true"  format="yyyy-MM-dd" placeholder="Check In" v-model="check_in"></vuejs-datepicker>
+
+                </div>
+
+                <div class="form-group col-md-6">
+{{--                    <label for="price">Check Out</label>--}}
+                    {{--                    <input class="form-control" type="date" placeholder="DD/MM/YYYY" id="check_out" v-model="check_out">--}}
+                    <vuejs-datepicker :bootstrap-styling="true"  format="yyyy-MM-dd" placeholder="Check Out" v-model="check_out"></vuejs-datepicker>
+
+                </div>
+            </div>
+
+
+            <a href="#" class="btn btn-primary my-2" @click="filterRooms">Check availability</a>
             </p>
         </div>
     </section>
