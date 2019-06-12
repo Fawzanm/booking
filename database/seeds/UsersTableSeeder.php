@@ -1,5 +1,7 @@
 <?php
 
+use App\Role;
+use App\User;
 use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder
@@ -11,15 +13,24 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\User::class, 10)->create();
+
+        $role_customer = Role::where('name', 'employee')->first();
+        $role_manager = Role::where('name', 'manager')->first();
+
+        $customer = User::create([
+            'email' => 'customer@examople.com',
+            'name' => 'John Doe',
+            'password' => bcrypt('secret')
+        ]);
+        $customer->roles()->attach($role_customer);
 
 
-        App\User::create([
+        $admin = User::create([
             'email' => 'fawzanm@gmail.com',
             'name' => 'Mohamed Fawzan',
-            'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm',
-
+            'password' => bcrypt('secret')
         ]);
+        $admin->roles()->attach($role_manager);
 
 
     }
