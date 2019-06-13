@@ -57,7 +57,6 @@ const admin_booking = new Vue({
                 check_out: this.check_out
             };
 
-            console.log('tota: ', d);
             axios.post('/booking/fetchTotal', d)
                 .then(function (resp) {
                     vm.room = resp.data;
@@ -81,21 +80,68 @@ const admin_booking = new Vue({
             };
             console.log(d);
 
-            axios.post('/admin_booking', d)
-                .then(function (resp) {
-                    console.log(resp.data);
-                    vm.status = resp.data.message;
+            if (this.isValid()) {
+                axios.post('/admin_booking', d)
+                    .then(function (resp) {
+                        console.log(resp.data);
+                        vm.status = resp.data.message;
 
-                    setTimeout(function () {
-                        vm.status = '';
-                    }, 5000)
-                })
+                        setTimeout(function () {
+                            vm.status = '';
+                        }, 5000)
+                    })
+            }
         },
 
         resetForm() {
 
             this.comments = '';
             this.no_adults = '';
+            this.status = '';
+
+
+        },
+
+        isNumeric(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        },
+
+        isValid() {
+
+
+            if (!this.isNumeric(this.user_id)) {
+                alert('Please select a customer.');
+                return false;
+            }
+
+            if (!this.isNumeric(this.room_id)) {
+                alert('Please select a room.');
+                return false;
+            }
+
+            if (this.check_in.length <= 0) {
+                alert('Please select a check in date.');
+                return false;
+            }
+
+            if (this.check_out.length <= 0) {
+                alert('Please select a check out date.');
+                return false;
+            }
+
+
+            if (!this.isNumeric(this.no_adults)) {
+                alert('Please enter a number for no. of adults.');
+                return false;
+            }
+
+            if (!this.isNumeric(this.price)) {
+                alert('Please update the total first.');
+                return false;
+            }
+
+
+            return true;
 
 
         },
