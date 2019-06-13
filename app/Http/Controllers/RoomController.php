@@ -21,6 +21,11 @@ class RoomController extends Controller
         return ['rooms' => Room::all()];
     }
 
+    public function fetch()
+    {
+        return ['room' => Room::findOrFail(request('id'))];
+    }
+
     public function available(Request $request)
     {
         $from = (new DateTime($request->input('check_in')))->format('Y-m-d');

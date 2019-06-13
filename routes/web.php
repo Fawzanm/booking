@@ -14,6 +14,7 @@
 
 Route::get('/', 'GuestController@index');
 Route::get('/booking', 'GuestController@booking');
+Route::post('/booking', 'GuestController@save');
 
 Auth::routes();
 
@@ -23,4 +24,5 @@ Route::get('/add_room', 'HomeController@add_room')->name('add_room');
 
 Route::post('/rooms/save', 'RoomController@create');
 Route::get('/rooms', 'RoomController@index');
+Route::get('/rooms/fetch', 'RoomController@fetch');
 Route::post('/rooms/free', 'RoomController@available');

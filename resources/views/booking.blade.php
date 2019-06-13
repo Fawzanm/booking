@@ -21,37 +21,43 @@
                                 <div class="form-group col-md-6">
                                     <label for="name">Check In</label>
                                     <input type="date" class="form-control" id="from" placeholder="2019/01/01"
-                                           value="{{request('check_in')}}">
+                                           value="{{request('check_in')}}" disabled>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="name">Check Out</label>
-                                    <input type="date" class="form-control" id="from" placeholder="2019/01/01"
-                                           value="{{ request('check_out') }}">
+                                    <input type="date" class="form-control" id="to"
+                                           value="{{ request('check_out') }}" disabled>
                                 </div>
 
+                                <input type="hidden" value="{{request('id')}}" id="room_id">
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
-                                    <label for="capacity">Capacity</label>
+                                    <label for="capacity">No of Adults</label>
                                     <input type="text" class="form-control" id="capacity"
-                                           placeholder="2" v-model="capacity">
+                                           v-model="no_adults">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="description">Comments</label>
                                 <input type="text" class="form-control" id="description"
-                                       placeholder="Fully furnished luxury room" v-model="description">
+                                       placeholder="" v-model="comments">
                             </div>
 
                             <div class="form-group">
                                 <label for="description">Total Payment</label>
-                                <input type="text" class="form-control" id="pay"
-                                        disabled>
+                                <input type="text" class="form-control" id="pay" v-model="pay"
+                                       disabled>
+                            </div>
+
+                            <div class="form-group">
+                                <p for="description" style="color: #2a9055">@{{ status }}</p>
                             </div>
 
 
-                            <button class="btn btn-primary" @click="saveForm">Pay</button>
+
+                            <button class="btn btn-primary" @click="saveForm">Book Now</button>
                             <button class="btn btn-danger" @click="resetForm">Reset</button>
                         </div>
                     </div>

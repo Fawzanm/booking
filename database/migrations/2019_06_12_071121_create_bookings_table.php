@@ -19,7 +19,8 @@ class CreateBookingsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->date('check_in');
             $table->date('check_out');
-            $table->integer('capacity');
+            $table->integer('no_adults');
+            $table->float('price');
             $table->string('comments', 1023);
 
             $table->timestamps();
