@@ -18,6 +18,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
+
+
 </head>
 <body>
 <div id="app">
@@ -55,7 +60,7 @@
                         <li class="nav-item"><a class="nav-link" href="{{route('bookings')}}">Bookings</a></li>
 
                         @if(auth()->user()->hasRole('admin'))
-                        <li class="nav-item"><a class="nav-link" href="{{route('add_room')}}">Add Room</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{route('add_room')}}">Add Room</a></li>
                         @endif
 
                         <li class="nav-item dropdown">
@@ -87,5 +92,6 @@
         @yield('content')
     </main>
 </div>
+
 </body>
 </html>

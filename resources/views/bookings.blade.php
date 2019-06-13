@@ -15,7 +15,7 @@
                         @endif
 
 
-                        <table class="table">
+                        <table class="table" id="bookings">
                             <thead class="thead-dark">
                             <tr>
                                 <th scope="col">#</th>
@@ -49,4 +49,6 @@
             </div>
         </div>
     </div>
+
+
 @endsection
