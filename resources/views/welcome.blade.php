@@ -108,7 +108,7 @@
                     </div>
                 </div>
 
-                <p v-if="rooms.size > 0">We don't have any rooms yet. Please check back later.</p>
+                <p v-if="rooms.length <= 0">We don't have any rooms yet. Please check back later.</p>
             </div>
         </div>
     </div>
