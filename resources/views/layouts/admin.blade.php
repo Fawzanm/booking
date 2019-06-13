@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/admin.js') }}" defer></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -18,9 +18,6 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.18/datatables.min.css"/>
 
     <script src="https://unpkg.com/vuejs-datepicker"></script>
 
@@ -58,12 +55,7 @@
                         @endif
                     @else
 
-                        <li class="nav-item"><a class="nav-link" href="{{route('bookings')}}">Bookings</a></li>
-
-                        @if(auth()->user()->hasRole('admin'))
-                            <li class="nav-item"><a class="nav-link" href="{{route('add_room')}}">Add Room</a></li>
-                        @endif
-
+                        <li class="nav-item"><a class="nav-link" href="{{route('bookings')}}">My Bookings</a></li>
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -93,6 +85,5 @@
         @yield('content')
     </main>
 </div>
-
 </body>
 </html>

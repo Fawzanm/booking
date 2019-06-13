@@ -15,6 +15,7 @@
 Route::get('/', 'GuestController@index');
 
 Route::get('/booking', 'GuestController@booking')->middleware('auth');
+Route::get('/admin_booking', 'GuestController@admin_booking')->middleware('auth');
 Route::post('/booking', 'GuestController@save')->middleware('auth');
 
 Auth::routes();

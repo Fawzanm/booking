@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 3);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -49319,6 +49319,113 @@ module.exports = function(module) {
 
 /***/ }),
 
+/***/ "./resources/js/admin.js":
+/*!*******************************!*\
+  !*** ./resources/js/admin.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes Vue and other libraries. It is a great starting point when
+ * building robust, powerful web applications using Vue and Laravel.
+ */
+__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
+window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/**
+ * The following block of code may be used to automatically register your
+ * Vue components. It will recursively scan this directory for the Vue
+ * components and automatically register them with their "basename".
+ *
+ * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
+ */
+// const files = require.context('./', true, /\.vue$/i);
+// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
+
+Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
+/**
+ * Next, we will create a fresh Vue application instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
+
+var admin_booking = new Vue({
+  el: '#admin_booking',
+  data: {
+    room_id: '',
+    user_id: '',
+    no_adults: '',
+    comments: '',
+    check_in: '',
+    check_out: '',
+    status: '',
+    room: ''
+  },
+  components: {
+    vuejsDatepicker: vuejsDatepicker
+  },
+  mounted: function mounted() {
+    console.log('admin booking mounted');
+  },
+  methods: {
+    fetchRoom: function fetchRoom() {
+      var vm = this;
+      axios.get('/rooms/fetch?id=' + vm.room_id).then(function (resp) {
+        vm.room = resp.data.room;
+        console.log(vm.room);
+      });
+    },
+    saveForm: function saveForm() {
+      // alert('save');
+      var vm = this;
+      var d = {
+        check_in: this.check_in,
+        check_out: this.check_out,
+        comments: this.comments,
+        room_id: this.room_id,
+        no_adults: this.no_adults,
+        price: this.pay
+      };
+      console.log(d);
+      axios.post('/booking', d).then(function (resp) {
+        console.log(resp.data);
+        vm.status = resp.data.message;
+        setTimeout(function () {
+          vm.status = '';
+        }, 5000);
+      });
+    },
+    resetForm: function resetForm() {
+      this.comments = '';
+      this.no_adults = '';
+    },
+    parseDate: function parseDate(str) {
+      var mdy = str.split('/');
+      console.log('mday', mdy);
+      return new Date(mdy[0], mdy[1] - 1, mdy[2]);
+    },
+    datediff: function datediff(first, second) {
+      // Take the difference between the dates and divide by milliseconds per day.
+      // Round to nearest whole number to deal with DST.
+      return Math.round((second - first) / (1000 * 60 * 60 * 24));
+    }
+  },
+  computed: {
+    // a computed getter
+    pay: function pay() {
+      // `this` points to the vm instance
+      if (this.room === '') return 0;
+      var diff = this.datediff(this.parseDate(this.check_in), this.parseDate(this.check_out));
+      console.log('diff : ', diff);
+      return this.room.price * diff;
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/bootstrap.js":
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
@@ -49446,191 +49553,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/customer.js":
-/*!**********************************!*\
-  !*** ./resources/js/customer.js ***!
-  \**********************************/
+/***/ 3:
+/*!*************************************!*\
+  !*** multi ./resources/js/admin.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-__webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
-
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-// const files = require.context('./', true, /\.vue$/i);
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-
-Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-var room = new Vue({
-  el: '#room',
-  data: {
-    room_id: '',
-    room: '',
-    no_adults: '',
-    comments: '',
-    check_in: '',
-    check_out: '',
-    status: ''
-  },
-  mounted: function mounted() {
-    console.log('ROOM');
-    this.room_id = document.getElementById('room_id').value;
-    this.check_in = document.getElementById('from').value;
-    this.check_out = document.getElementById('to').value;
-  },
-  methods: {
-    fetchRoom: function fetchRoom() {
-      var vm = this;
-      axios.get('/rooms/fetch?id=' + vm.room_id).then(function (resp) {
-        vm.room = resp.data.room;
-        console.log(vm.room);
-      });
-    },
-    saveForm: function saveForm() {
-      // alert('save');
-      var vm = this;
-      var d = {
-        check_in: this.check_in,
-        check_out: this.check_out,
-        comments: this.comments,
-        room_id: this.room_id,
-        no_adults: this.no_adults,
-        price: this.pay
-      };
-      console.log(d);
-      axios.post('/booking', d).then(function (resp) {
-        console.log(resp.data);
-        vm.status = resp.data.message;
-        setTimeout(function () {
-          vm.status = '';
-        }, 5000);
-      });
-    },
-    resetForm: function resetForm() {
-      this.comments = '';
-      this.no_adults = '';
-    },
-    parseDate: function parseDate(str) {
-      var mdy = str.split('/');
-      console.log('mday', mdy);
-      return new Date(mdy[0], mdy[1] - 1, mdy[2]);
-    },
-    datediff: function datediff(first, second) {
-      // Take the difference between the dates and divide by milliseconds per day.
-      // Round to nearest whole number to deal with DST.
-      return Math.round((second - first) / (1000 * 60 * 60 * 24));
-    }
-  },
-  computed: {
-    // a computed getter
-    pay: function pay() {
-      // `this` points to the vm instance
-      var diff = this.datediff(this.parseDate(this.check_in), this.parseDate(this.check_out));
-      console.log('diff : ', diff);
-      return this.room.price * diff;
-    }
-  }
-});
-var admin_booking = new Vue({
-  el: '#admin_booking',
-  data: {
-    room_id: '',
-    user_id: '',
-    no_adults: '',
-    comments: '',
-    check_in: '',
-    check_out: '',
-    status: '',
-    room: ''
-  },
-  components: {
-    vuejsDatepicker: vuejsDatepicker
-  },
-  mounted: function mounted() {
-    console.log('admin booking mounted');
-  },
-  methods: {
-    fetchRoom: function fetchRoom() {
-      var vm = this;
-      axios.get('/rooms/fetch?id=' + vm.room_id).then(function (resp) {
-        vm.room = resp.data.room;
-        console.log(vm.room);
-      });
-    },
-    saveForm: function saveForm() {
-      // alert('save');
-      var vm = this;
-      var d = {
-        check_in: this.check_in,
-        check_out: this.check_out,
-        comments: this.comments,
-        room_id: this.room_id,
-        no_adults: this.no_adults,
-        price: this.pay
-      };
-      console.log(d);
-      axios.post('/booking', d).then(function (resp) {
-        console.log(resp.data);
-        vm.status = resp.data.message;
-        setTimeout(function () {
-          vm.status = '';
-        }, 5000);
-      });
-    },
-    resetForm: function resetForm() {
-      this.comments = '';
-      this.no_adults = '';
-    },
-    parseDate: function parseDate(str) {
-      var mdy = str.split('/');
-      console.log('mday', mdy);
-      return new Date(mdy[0], mdy[1] - 1, mdy[2]);
-    },
-    datediff: function datediff(first, second) {
-      // Take the difference between the dates and divide by milliseconds per day.
-      // Round to nearest whole number to deal with DST.
-      return Math.round((second - first) / (1000 * 60 * 60 * 24));
-    }
-  },
-  computed: {
-    // a computed getter
-    pay: function pay() {
-      // `this` points to the vm instance
-      if (this.room === '') return 0;
-      var diff = this.datediff(this.parseDate(this.check_in), this.parseDate(this.check_out));
-      console.log('diff : ', diff);
-      return this.room.price * diff;
-    }
-  }
-});
-
-/***/ }),
-
-/***/ 2:
-/*!****************************************!*\
-  !*** multi ./resources/js/customer.js ***!
-  \****************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = __webpack_require__(/*! /Users/fawzan/bits/booking/resources/js/customer.js */"./resources/js/customer.js");
+module.exports = __webpack_require__(/*! /Users/fawzan/bits/booking/resources/js/admin.js */"./resources/js/admin.js");
 
 
 /***/ })

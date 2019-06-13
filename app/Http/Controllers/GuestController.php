@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Booking;
 use App\Room;
+use App\User;
 use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
@@ -29,6 +30,16 @@ class GuestController extends Controller
         $to = Carbon::parse($request->input('check_out'));
 
         return view('booking', ['room' => $room]);
+    }
+
+    public function admin_booking(Request $request)
+    {
+        $request->user()->authorizeRoles(['admin']);
+
+
+        $users = User::all();
+        $rooms = Room::all();
+        return view('admin_booking', ['users' => $users, 'rooms'=>$rooms]);
     }
 
 
