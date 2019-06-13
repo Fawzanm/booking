@@ -36,7 +36,8 @@ const room = new Vue({
         capacity: '',
         description: '',
         type: 'apartment',
-        price: ''
+        price: '',
+        status: ''
 
     },
     mounted() {
@@ -45,6 +46,7 @@ const room = new Vue({
     methods: {
         saveForm() {
             // alert('save');
+            let vm = this;
             console.log('save clicked');
             console.log(this.name, this.capacity, this.description, this.type, this.price);
             let d = {
@@ -55,10 +57,13 @@ const room = new Vue({
                 price: this.price
             };
 
-            axios.post('/rooms/save', d)
-                .then(function (resp) {
-                    console.log(resp.data);
-                })
+            if (this.isValid()) {
+                axios.post('/rooms/save', d)
+                    .then(function (resp) {
+                        console.log(resp.data);
+                        vm.status = resp.data.message;
+                    })
+            }
         },
 
         resetForm() {
@@ -70,8 +75,42 @@ const room = new Vue({
             this.description = '';
             this.type = 'apartment';
             this.price = '';
+            this.status = '';
 
         },
+
+        isNumeric(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        },
+
+        isValid() {
+
+
+            if (this.name.length <= 0) {
+                alert('Please enter a name for the room.');
+                return false;
+            }
+
+            if (this.description.length <= 0) {
+                alert('Please enter a description for the room.');
+                return false;
+            }
+
+            if (!this.isNumeric(this.capacity)) {
+                alert('Please enter a number for capacity.');
+                return false;
+            }
+
+            if (!this.isNumeric(this.price)) {
+                alert('Please enter a number for price.');
+                return false;
+
+            }
+
+
+            return true;
+
+        }
 
     }
 

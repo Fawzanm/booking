@@ -53,6 +53,10 @@
                                 </div>
                             </div>
 
+                            <div class="form-group">
+                                <p for="description" style="color: #2a9055">@{{ status }}</p>
+                            </div>
+
                             <button class="btn btn-primary" @click="saveForm">Save</button>
                             <button class="btn btn-danger" @click="resetForm">Reset</button>
                         </div>

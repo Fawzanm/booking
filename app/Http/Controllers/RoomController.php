@@ -46,7 +46,7 @@ class RoomController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return Room
+     * @return array
      */
     public function create(Request $request)
     {
@@ -59,6 +59,8 @@ class RoomController extends Controller
             'user_id' => Auth::user()->id
         ]);
 
+
+        return ['message' => 'Your room has been added successfully.'];
     }
 
     /**
