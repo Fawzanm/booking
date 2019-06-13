@@ -27,7 +27,7 @@
     {{--        if (datefield.type != "date") { //if browser doesn't support input type="date", initialize date picker widget:--}}
     {{--            jQuery(function ($) { //on document.ready--}}
     {{--                $('#check_in').datepicker({dateFormat: 'yy-mm-dd'});--}}
-    {{--                $('#check_out').datepicker({dateFormat: 'yy-mm-dd'});--}}
+    {{--                $('#check_out').datepicker({dateFormat: 'yy-mm-dd'});--}
     {{--            })--}}
     {{--        }--}}
     {{--    </script>--}}
@@ -39,9 +39,12 @@
 <header>
 
     <nav class="nav float-md-right">
-        <a class="nav-link active" href="{{ route('bookings') }}">Home</a>
+        @auth
+        <a class="nav-link active" href="{{ route('bookings') }}">Bookings</a>
+        @else
         <a class="nav-link" href="{{ route('register') }}">Register</a>
         <a class="nav-link" href="{{ route('login') }}">Login</a>
+        @endauth
         {{--        <a class="nav-link disabled" href="#">Contact</a>--}}
     </nav>
 </header>
