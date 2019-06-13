@@ -44,9 +44,7 @@ const admin_booking = new Vue({
     components: {
         vuejsDatepicker
     },
-    mounted() {
-        console.log('admin booking mounted');
-    },
+
     methods: {
 
         fetchTotal() {
@@ -60,7 +58,6 @@ const admin_booking = new Vue({
             axios.post('/booking/fetchTotal', d)
                 .then(function (resp) {
                     vm.room = resp.data;
-                    console.log(resp.data);
                     vm.price = resp.data.price;
                 })
 
@@ -78,12 +75,10 @@ const admin_booking = new Vue({
                 no_adults: this.no_adults,
                 price: this.price
             };
-            console.log(d);
 
             if (this.isValid()) {
                 axios.post('/admin_booking', d)
                     .then(function (resp) {
-                        console.log(resp.data);
                         vm.status = resp.data.message;
 
                         setTimeout(function () {

@@ -40,15 +40,11 @@ const room = new Vue({
         status: ''
 
     },
-    mounted() {
-        console.log('ROOM');
-    },
+
     methods: {
         saveForm() {
             // alert('save');
             let vm = this;
-            console.log('save clicked');
-            console.log(this.name, this.capacity, this.description, this.type, this.price);
             let d = {
                 name: this.name,
                 capacity: this.capacity,
@@ -60,15 +56,12 @@ const room = new Vue({
             if (this.isValid()) {
                 axios.post('/rooms/save', d)
                     .then(function (resp) {
-                        console.log(resp.data);
                         vm.status = resp.data.message;
                     })
             }
         },
 
         resetForm() {
-
-            console.log('reset clicked');
 
             this.name = '';
             this.capacity = '';

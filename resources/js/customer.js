@@ -57,7 +57,6 @@ const room = new Vue({
             axios.get('/rooms/fetch?id=' + vm.room_id)
                 .then(function (resp) {
                     vm.room = resp.data.room;
-                    console.log('room : ', vm.room);
                 })
 
         },
@@ -74,7 +73,6 @@ const room = new Vue({
                 no_adults: this.no_adults,
                 price: this.pay
             };
-            console.log(d);
 
             if (this.isValid()) {
                 axios.post('/booking', d)
@@ -115,7 +113,6 @@ const room = new Vue({
 
         parseDate(str) {
             var mdy = str.split('/');
-            console.log('mday', mdy);
             return new Date(mdy[0], mdy[1] - 1, mdy[2]);
         },
 
@@ -132,7 +129,6 @@ const room = new Vue({
         pay() {
             // `this` points to the vm instance
             let diff = this.datediff(this.parseDate(this.check_in), this.parseDate(this.check_out));
-            console.log('diff : ', diff);
             return this.room.price * diff;
         }
     }

@@ -54,7 +54,6 @@ const main = new Vue({
             if (this.isValid()) {
                 axios.post('/rooms/free', d).then(function (resp) {
                     vm.rooms = resp.data;
-                    console.log(resp.data);
                 })
             }
         },
