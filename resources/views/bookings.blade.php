@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
-                    <div class="card-header">Add Room</div>
+                    <div class="card-header">Bookings</div>
 
                     <div class="card-body">
                         @if (session('status'))
@@ -28,33 +28,18 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
-                                <td>@mdo</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Jacob</td>
-                                <td>Thornton</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                                <td>@fat</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Larry</td>
-                                <td>the Bird</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                                <td>@twitter</td>
-                            </tr>
+                            @foreach($bookings as $booking)
+                                <tr>
+                                    <th scope="row">{{$booking->id}}</th>
+                                    <td>{{$booking->room->name}}</td>
+                                    <td>{{$booking->user->email}}</td>
+                                    <td>{{$booking->check_in}}</td>
+                                    <td>{{$booking->check_out}}</td>
+                                    <td>{{$booking->no_adults}}</td>
+                                    <td>{{$booking->comments}}</td>
+                                </tr>
+
+                            @endforeach
                             </tbody>
                         </table>
 

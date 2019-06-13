@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Booking;
 use App\Room;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -32,8 +34,16 @@ class HomeController extends Controller
     public function bookings(Request $request)
     {
 
-        $request->user()->authorizeRoles(['admin']);
-        return view('bookings');
+        $request->user()->authorizeRoles(['admin', 'customer']);
+
+
+        if (Auth::user()->hasRole('admin')) {
+            $bookings = Booking::all();
+        } else {
+            $bookings = Booking::where('user_id', Auth::user()->id);
+        }
+
+        return view('bookings', ['bookings' => $bookings]);
 
     }
 
