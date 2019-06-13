@@ -40,10 +40,10 @@
 
     <nav class="nav float-md-right">
         @auth
-        <a class="nav-link active" href="{{ route('bookings') }}">Bookings</a>
+            <a class="nav-link active" href="{{ route('bookings') }}">Bookings</a>
         @else
-        <a class="nav-link" href="{{ route('register') }}">Register</a>
-        <a class="nav-link" href="{{ route('login') }}">Login</a>
+            <a class="nav-link" href="{{ route('register') }}">Register</a>
+            <a class="nav-link" href="{{ route('login') }}">Login</a>
         @endauth
         {{--        <a class="nav-link disabled" href="#">Contact</a>--}}
     </nav>
@@ -97,10 +97,14 @@
                             <p class="card-text">@{{room.description}}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
-                                    <a type="button" class="btn btn-sm btn-outline-secondary"
+                                    <a v-if="checkInDate().length > 0 && checkOutDate().length > 0" type="button"
+                                       class="btn btn-sm btn-outline-secondary"
                                        :href="`/booking?id=${room.id}&check_in=${checkInDate()}&check_out=${checkOutDate()}`">Book
                                         Now</a>
                                     {{--                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>--}}
+                                    <p v-if="checkOutDate().length == 0 || checkInDate().length == 0" style="color: #2a9055">Please select
+                                        check in & check out dates first.</p>
+
                                 </div>
                                 <small class="text-muted">@{{room.price}}AED / day</small>
                             </div>
