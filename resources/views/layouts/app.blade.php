@@ -62,6 +62,7 @@
 
                         @if(auth()->user()->hasRole('admin'))
                             <li class="nav-item"><a class="nav-link" href="{{route('add_room')}}">Add Room</a></li>
+                            <li class="nav-item"><a class="nav-link" href="{{route('admin_booking')}}">New Booking</a></li>
                         @endif
 
                         <li class="nav-item dropdown">
