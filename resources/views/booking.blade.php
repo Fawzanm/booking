@@ -21,15 +21,15 @@
                                 <div class="form-group col-md-6">
                                     <label for="name">Check In</label>
                                     <input type="date" class="form-control" id="from" placeholder="2019/01/01"
-                                           value="{{request('check_in')}}" disabled>
+                                           value="{{$check_in}}" disabled>
                                 </div>
                                 <div class="form-group col-md-6">
                                     <label for="name">Check Out</label>
                                     <input type="date" class="form-control" id="to"
-                                           value="{{ request('check_out') }}" disabled>
+                                           value="{{ $check_out }}" disabled>
                                 </div>
 
-                                <input type="hidden" value="{{request('id')}}" id="room_id">
+                                <input type="hidden" value="{{$room->id}}" id="room_id">
                             </div>
 
                             <div class="form-row">
@@ -54,7 +54,6 @@
                             <div class="form-group">
                                 <p for="description" style="color: #2a9055">@{{ status }}</p>
                             </div>
-
 
 
                             <button class="btn btn-primary" @click="saveForm">Book Now</button>

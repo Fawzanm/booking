@@ -47,6 +47,7 @@ const room = new Vue({
         this.room_id = document.getElementById('room_id').value;
         this.check_in = document.getElementById('from').value;
         this.check_out = document.getElementById('to').value;
+        this.fetchRoom();
 
     },
     methods: {
@@ -56,7 +57,7 @@ const room = new Vue({
             axios.get('/rooms/fetch?id=' + vm.room_id)
                 .then(function (resp) {
                     vm.room = resp.data.room;
-                    console.log(vm.room);
+                    console.log('room : ', vm.room);
                 })
 
         },
@@ -118,92 +119,4 @@ const room = new Vue({
         }
     }
 
-});
-
-
-const admin_booking = new Vue({
-    el: '#admin_booking',
-    data: {
-        room_id: '',
-        user_id: '',
-        no_adults: '',
-        comments: '',
-        check_in: '',
-        check_out: '',
-        status: '',
-        room: ''
-    },
-    components: {
-        vuejsDatepicker
-    },
-    mounted() {
-        console.log('admin booking mounted');
-    },
-    methods: {
-
-        fetchRoom() {
-            let vm = this;
-            axios.get('/rooms/fetch?id=' + vm.room_id)
-                .then(function (resp) {
-                    vm.room = resp.data.room;
-                    console.log(vm.room);
-                })
-
-        },
-        saveForm() {
-            // alert('save');
-            let vm = this;
-
-            let d = {
-                check_in: this.check_in,
-                check_out: this.check_out,
-                comments: this.comments,
-                room_id: this.room_id,
-                no_adults: this.no_adults,
-                price: this.pay
-            };
-            console.log(d);
-
-            axios.post('/booking', d)
-                .then(function (resp) {
-                    console.log(resp.data);
-                    vm.status = resp.data.message;
-
-                    setTimeout(function () {
-                        vm.status = '';
-                    }, 5000)
-                })
-        },
-
-        resetForm() {
-
-            this.comments = '';
-            this.no_adults = '';
-
-
-        },
-
-        parseDate(str) {
-            var mdy = str.split('/');
-            console.log('mday', mdy);
-            return new Date(mdy[0], mdy[1] - 1, mdy[2]);
-        },
-
-        datediff(first, second) {
-            // Take the difference between the dates and divide by milliseconds per day.
-            // Round to nearest whole number to deal with DST.
-            return Math.round((second - first) / (1000 * 60 * 60 * 24));
-        }
-    },
-    computed: {
-        // a computed getter
-
-        pay() {
-            // `this` points to the vm instance
-            if (this.room === '') return 0;
-            let diff = this.datediff(this.parseDate(this.check_in), this.parseDate(this.check_out));
-            console.log('diff : ', diff);
-            return this.room.price * diff;
-        }
-    }
 });

@@ -26,10 +26,10 @@ class GuestController extends Controller
 
         $room = Room::findOrFail($request->input('id'));
 
-        $from = Carbon::parse($request->input('check_in'));
-        $to = Carbon::parse($request->input('check_out'));
+        $from = Carbon::parse($request->input('check_in'))->format('Y/m/d');
+        $to = Carbon::parse($request->input('check_out'))->format('Y/m/d');
 
-        return view('booking', ['room' => $room]);
+        return view('booking', ['room' => $room, 'check_in' => $from, 'check_out' => $to]);
     }
 
     public function admin_booking(Request $request)
