@@ -49361,7 +49361,7 @@ var admin_booking = new Vue({
     check_in: '',
     check_out: '',
     status: '',
-    room: ''
+    price: ''
   },
   components: {
     vuejsDatepicker: vuejsDatepicker
@@ -49370,26 +49370,34 @@ var admin_booking = new Vue({
     console.log('admin booking mounted');
   },
   methods: {
-    fetchRoom: function fetchRoom() {
+    fetchTotal: function fetchTotal() {
       var vm = this;
-      axios.get('/rooms/fetch?id=' + vm.room_id).then(function (resp) {
-        vm.room = resp.data.room;
-        console.log(vm.room);
+      var d = {
+        room_id: this.room_id,
+        check_in: this.check_in,
+        check_out: this.check_out
+      };
+      console.log('tota: ', d);
+      axios.post('/booking/fetchTotal', d).then(function (resp) {
+        vm.room = resp.data;
+        console.log(resp.data);
+        vm.price = resp.data.price;
       });
     },
     saveForm: function saveForm() {
       // alert('save');
       var vm = this;
       var d = {
+        user_id: this.user_id,
         check_in: this.check_in,
         check_out: this.check_out,
         comments: this.comments,
         room_id: this.room_id,
         no_adults: this.no_adults,
-        price: this.pay
+        price: this.price
       };
       console.log(d);
-      axios.post('/booking', d).then(function (resp) {
+      axios.post('/admin_booking', d).then(function (resp) {
         console.log(resp.data);
         vm.status = resp.data.message;
         setTimeout(function () {
@@ -49400,26 +49408,6 @@ var admin_booking = new Vue({
     resetForm: function resetForm() {
       this.comments = '';
       this.no_adults = '';
-    },
-    parseDate: function parseDate(str) {
-      var mdy = str.split('/');
-      console.log('mday', mdy);
-      return new Date(mdy[0], mdy[1] - 1, mdy[2]);
-    },
-    datediff: function datediff(first, second) {
-      // Take the difference between the dates and divide by milliseconds per day.
-      // Round to nearest whole number to deal with DST.
-      return Math.round((second - first) / (1000 * 60 * 60 * 24));
-    }
-  },
-  computed: {
-    // a computed getter
-    pay: function pay() {
-      // `this` points to the vm instance
-      if (this.room === '') return 0;
-      var diff = this.datediff(this.parseDate(this.check_in), this.parseDate(this.check_out));
-      console.log('diff : ', diff);
-      return this.room.price * diff;
     }
   }
 });

@@ -15,7 +15,10 @@
 Route::get('/', 'GuestController@index');
 
 Route::get('/booking', 'GuestController@booking')->middleware('auth');
+
+Route::post('/booking/fetchTotal', 'GuestController@fetchTotal')->middleware('auth');
 Route::get('/admin_booking', 'GuestController@admin_booking')->middleware('auth');
+Route::post('/admin_booking', 'GuestController@admin_booking_save')->middleware('auth');
 Route::post('/booking', 'GuestController@save')->middleware('auth');
 
 Auth::routes();

@@ -21,7 +21,7 @@ class CreateBookingsTable extends Migration
             $table->date('check_out');
             $table->integer('no_adults');
             $table->float('price');
-            $table->string('comments', 1023);
+            $table->string('comments', 1023)->nullable();
 
             $table->timestamps();
         });

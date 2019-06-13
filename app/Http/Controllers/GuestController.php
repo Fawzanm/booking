@@ -39,7 +39,7 @@ class GuestController extends Controller
 
         $users = User::all();
         $rooms = Room::all();
-        return view('admin_booking', ['users' => $users, 'rooms'=>$rooms]);
+        return view('admin_booking', ['users' => $users, 'rooms' => $rooms]);
     }
 
 
@@ -50,6 +50,42 @@ class GuestController extends Controller
             'room_id' => request('room_id'),
             'check_in' => request('check_in'),
             'check_out' => request('check_out'),
+            'no_adults' => request('no_adults'),
+            'price' => request('price'),
+            'comments' => request('comments'),
+        ]);
+
+        return ['message' => 'Your booking has been confirmed successfully.'];
+    }
+
+
+    public function fetchTotal(Request $request)
+    {
+
+        $room = Room::find(request('room_id'));
+
+        $from = (new DateTime($request->input('check_in')))->format('Y-m-d');
+        $to = (new DateTime($request->input('check_out')))->format('Y-m-d');
+
+        // Calulating the difference in timestamps
+        $diff = strtotime($from) - strtotime($to);
+
+        // 1 day = 24 hours
+        // 24 * 60 * 60 = 86400 seconds
+        return ['price' => abs(round($diff / 86400)) * $room->price];
+
+    }
+
+    public function admin_booking_save(Request $request)
+    {
+        $from = (new DateTime($request->input('check_in')))->format('Y-m-d');
+        $to = (new DateTime($request->input('check_out')))->format('Y-m-d');
+
+        $booking = Booking::create([
+            'user_id' => request('user_id'),
+            'room_id' => request('room_id'),
+            'check_in' => $from,
+            'check_out' => $to,
             'no_adults' => request('no_adults'),
             'price' => request('price'),
             'comments' => request('comments'),

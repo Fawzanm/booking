@@ -75,7 +75,7 @@
 
                             <div class="form-group">
                                 <label for="description">Total Payment</label>
-                                <input type="text" class="form-control" id="pay" v-model="pay"
+                                <input type="text" class="form-control" id="pay" v-model="price"
                                        disabled>
                             </div>
 
@@ -84,7 +84,7 @@
                             </div>
 
 
-                            <button class="btn btn-primary" @click="saveForm">Update Total</button>
+                            <button class="btn btn-primary" @click="fetchTotal">Update Total</button>
                             <button class="btn btn-primary" @click="saveForm">Book Now</button>
                             <button class="btn btn-danger" @click="resetForm">Reset</button>
                         </div>
