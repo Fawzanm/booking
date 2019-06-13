@@ -76,21 +76,39 @@ const room = new Vue({
             };
             console.log(d);
 
-            axios.post('/booking', d)
-                .then(function (resp) {
-                    console.log(resp.data);
-                    vm.status = resp.data.message;
+            if (this.isValid()) {
+                axios.post('/booking', d)
+                    .then(function (resp) {
+                        console.log(resp.data);
+                        vm.status = resp.data.message;
 
-                    setTimeout(function () {
-                        vm.status = '';
-                    }, 5000)
-                })
+                        setTimeout(function () {
+                            vm.status = '';
+                        }, 5000)
+                    })
+            }
         },
 
         resetForm() {
 
             this.comments = '';
             this.no_adults = '';
+            this.status = '';
+
+
+        },
+        isNumeric(n) {
+            return !isNaN(parseFloat(n)) && isFinite(n);
+        },
+
+        isValid() {
+
+            if (!this.isNumeric(this.no_adults)) {
+                alert('Please enter a number for no. of adults.');
+                return false;
+            }
+
+            return true;
 
 
         },

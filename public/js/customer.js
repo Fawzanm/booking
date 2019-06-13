@@ -49516,17 +49516,32 @@ var room = new Vue({
         price: this.pay
       };
       console.log(d);
-      axios.post('/booking', d).then(function (resp) {
-        console.log(resp.data);
-        vm.status = resp.data.message;
-        setTimeout(function () {
-          vm.status = '';
-        }, 5000);
-      });
+
+      if (this.isValid()) {
+        axios.post('/booking', d).then(function (resp) {
+          console.log(resp.data);
+          vm.status = resp.data.message;
+          setTimeout(function () {
+            vm.status = '';
+          }, 5000);
+        });
+      }
     },
     resetForm: function resetForm() {
       this.comments = '';
       this.no_adults = '';
+      this.status = '';
+    },
+    isNumeric: function isNumeric(n) {
+      return !isNaN(parseFloat(n)) && isFinite(n);
+    },
+    isValid: function isValid() {
+      if (!this.isNumeric(this.no_adults)) {
+        alert('Please enter a number for no. of adults.');
+        return false;
+      }
+
+      return true;
     },
     parseDate: function parseDate(str) {
       var mdy = str.split('/');
