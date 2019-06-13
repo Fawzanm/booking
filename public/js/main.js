@@ -50999,10 +50999,13 @@ var main = new Vue({
         check_in: this.check_in,
         check_out: this.check_out
       };
-      axios.post('/rooms/free', d).then(function (resp) {
-        vm.rooms = resp.data;
-        console.log(resp.data);
-      });
+
+      if (this.isValid()) {
+        axios.post('/rooms/free', d).then(function (resp) {
+          vm.rooms = resp.data;
+          console.log(resp.data);
+        });
+      }
     },
     getRooms: function getRooms() {
       var vm = this;
@@ -51017,6 +51020,19 @@ var main = new Vue({
     checkOutDate: function checkOutDate() {
       if (this.check_out !== '') return this.check_out.getFullYear() + "/" + (this.check_out.getMonth() + 1) + "/" + this.check_out.getDate();
       return '';
+    },
+    isValid: function isValid() {
+      if (this.check_in.length <= 0) {
+        alert('Please select a check in date first.');
+        return false;
+      }
+
+      if (this.check_out.length <= 0) {
+        alert('Please select a check out date first.');
+        return false;
+      }
+
+      return true;
     }
   }
 });
